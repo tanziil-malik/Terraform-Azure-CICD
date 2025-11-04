@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '20.x'
 
-      # 3️⃣ Install dependencies (CI-optimized)
+      # 3️⃣ Install dependencies (fast + reliable)
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
         working-directory: ./app
@@ -31,7 +31,7 @@ jobs:
         run: npm run build --if-present
         working-directory: ./app
 
-      # 5️⃣ Prepare deployment package (zip, skip node_modules)
+      # 5️⃣ Prepare deployment package (skip node_modules)
       - name: Prepare deployment package
         run: |
           cd app
@@ -41,6 +41,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Terraform-Azure-CICD-App'   # ⚙️ must match your Azure Web App name exactly
+          app-name: 'terraform-azure-cicd-demo'   # ✅ matches your Azure portal
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: deploy.zip
